@@ -28,6 +28,10 @@ Library
     Returns a search bar to filter the questions to display in the view
 
 ### Model
-**icardData.tsx**
+**iquestion.tsx**
 
-    Card data interface
+    question data interface
+
+### Next Moves
+- need to add first question to the database
+- need to pull initial questions

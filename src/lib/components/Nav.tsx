@@ -1,9 +1,12 @@
 "use client";
 
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Nav = () => {
+  useEffect(()=>{
+    console.log("hello wurld");
+  },[])
   return (
       <ul className='flex justify-evenly text-xl my-8'>
         <li>
