@@ -1,7 +1,6 @@
 import { iQuestion } from "@/lib/model/iquestion";
 import { RootState } from "../../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { act } from "react";
 
 const initialState:iQuestion[] = [];
 
@@ -31,3 +30,7 @@ export const questionSlice = createSlice({
         }
     }
 })
+
+export const { getAllQuestions, addQuestion, modifyQuestion, removeQuestion } = questionSlice.actions;
+export const selectQuestions = (state:RootState) => state;
+export default questionSlice.reducer;
