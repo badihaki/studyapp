@@ -9,19 +9,25 @@ Library
 ### Components
 **Card.tsx**
 
-    > Returns a card component that shows the question and a blurb from the official docs about it
+    Returns a card component that shows the question and a blurb from the official docs about it
 
 **CardHolder.tsx**
 
-    > Returns a container that holds all the cards
+    Returns a container that holds all the cards
 
 **CreateQuestion.tsx**
 
-    > Returns a form that allows user to create a new question
+    Returns a form that allows user to create a new question
+
 **Nav.tsx**
 
-    > Returns a navigation bar to be used in the root page layout
+    Returns a navigation bar to be used in the root page layout
 
 **SearchBar.tsx**
 
-    > Returns a search bar to filter the questions to display
+    Returns a search bar to filter the questions to display in the view
+
+### Model
+**icardData.tsx**
+
+    Card data interface
