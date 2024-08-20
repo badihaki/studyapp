@@ -1,5 +1,6 @@
+'ues client'
+
 import CardHolder from "@/lib/components/CardHolder";
-import Image from "next/image";
 
 export default function Home() {
   return (

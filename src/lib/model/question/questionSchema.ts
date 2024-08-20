@@ -1,11 +1,7 @@
 import mongoose, { model, Schema } from "mongoose";
 import { iQuestion } from "./iquestion";
 
-interface questionDocument extends iQuestion{
-    _id: String
-}
-
-const QuestionSchema = new  Schema<questionDocument>({
+const QuestionSchema = new  Schema<iQuestion>({
     _id: {
         type: mongoose.Types.ObjectId,
     },
@@ -28,6 +24,6 @@ const QuestionSchema = new  Schema<questionDocument>({
     difficulty: String
 })
 
-const Question = mongoose.models?.Question || model<questionDocument>("Question", QuestionSchema);
+const Question = mongoose.models?.Question || model<iQuestion>("Question", QuestionSchema);
 
 export default Question;

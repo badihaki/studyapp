@@ -2,9 +2,9 @@
 
 import React, { ChangeEvent, ChangeEventHandler, FormEvent, useState } from 'react'
 import { difficultyLevel, iQuestion } from '../model/question/iquestion';
-import { clear } from 'console';
-import { addQuestion } from '../model/question/questionActions';
-import { json } from 'stream/consumers';
+import { addQuestionToDB } from '../model/question/questionActions';
+import { useAppDispatch } from '../redux/hooks';
+import { addQuestion } from '../redux/features/questions/questionSlice';
 
 const CreateQuestion = () => {
     const [showForm, setShowForm] = useState<boolean>(false);
@@ -21,6 +21,7 @@ const CreateQuestion = () => {
         notes: "",
         level: difficultyLevel.beginner
     })
+    const dispatch = useAppDispatch();
 
     function handleFormChange(event:{target:{value:string, name:string}}):void{
         const key:string = event.target.name;
@@ -78,6 +79,7 @@ const CreateQuestion = () => {
         // console.log("form");
         // console.log(form);
         const question:iQuestion = {
+            _id: "",
             question: form.question,
             docs:form.docs,
             tags: [form.subject],
@@ -86,8 +88,12 @@ const CreateQuestion = () => {
         };
         // console.log("question");
         // console.log(question);
-        addQuestion(question).then(data=>{
-            JSON.parse(data);
+        addQuestionToDB(question).then(data=>{
+            const response = JSON.parse(data);
+            console.log(response);
+            
+            // dispatch the new question to our overall questions <<<< TEST
+            dispatch(addQuestion(response));
         });
         clearForm();
     }

@@ -3,9 +3,8 @@
 import mongoose from "mongoose"
 import { iQuestion } from "./iquestion"
 import Question from "./questionSchema"
-import { json } from "stream/consumers"
 
-const addQuestion = async (question:iQuestion)=>{
+const addQuestionToDB = async (question:iQuestion)=>{
     try{
         const newQuestion = new Question({
             question: question.question,
@@ -26,4 +25,4 @@ const addQuestion = async (question:iQuestion)=>{
     }
 }
 
-export { addQuestion };
+export { addQuestionToDB };
