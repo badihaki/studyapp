@@ -1,5 +1,4 @@
 export interface iQuestion{
-    _id: string,
     question: string,
     docs: string,
     tags: string[],

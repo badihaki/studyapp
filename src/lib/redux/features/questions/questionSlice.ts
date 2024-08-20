@@ -1,4 +1,4 @@
-import { iQuestion } from "@/lib/model/iquestion";
+import { iQuestion } from "@/lib/model/question/iquestion";
 import { RootState } from "../../store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "@/lib/components/Nav";
 import CreateQuestion from "@/lib/components/CreateQuestion";
 import StoreProvider from "./StoreProvider";
+import { register } from "../instrumentation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +18,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  register();
+
   return (
     <html lang="en">
       <StoreProvider>

@@ -1,8 +1,10 @@
 "use client"
 
 import React, { ChangeEvent, ChangeEventHandler, FormEvent, useState } from 'react'
-import { difficultyLevel } from '../model/iquestion';
+import { difficultyLevel, iQuestion } from '../model/question/iquestion';
 import { clear } from 'console';
+import { addQuestion } from '../model/question/questionActions';
+import { json } from 'stream/consumers';
 
 const CreateQuestion = () => {
     const [showForm, setShowForm] = useState<boolean>(false);
@@ -56,15 +58,15 @@ const CreateQuestion = () => {
         switch (event.target.value){
             case "0":
                 updatedForm.level = difficultyLevel.beginner;
-                console.log("beginner")
+                // console.log("beginner")
                 break;
             case "1":
                 updatedForm.level = difficultyLevel.intermediate;
-                console.log("intermediate")
+                // console.log("intermediate")
                 break;
             case "2":
                 updatedForm.level = difficultyLevel.advance;
-                console.log("advance")
+                // console.log("advance")
                 break;
         }
 
@@ -73,6 +75,20 @@ const CreateQuestion = () => {
 
     function handleSubmit(e:FormEvent){
         e.preventDefault();
+        // console.log("form");
+        // console.log(form);
+        const question:iQuestion = {
+            question: form.question,
+            docs:form.docs,
+            tags: [form.subject],
+            notes:[form.notes],
+            difficulty: form.level
+        };
+        // console.log("question");
+        // console.log(question);
+        addQuestion(question).then(data=>{
+            JSON.parse(data);
+        });
         clearForm();
     }
 
