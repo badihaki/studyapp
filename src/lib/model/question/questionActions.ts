@@ -25,4 +25,9 @@ const addQuestionToDB = async (question:iQuestion)=>{
     }
 }
 
-export { addQuestionToDB };
+const getQuestionsFromDB = async ()=>{
+    const questions = await Question.find();
+    return JSON.stringify(questions);
+}
+
+export { addQuestionToDB, getQuestionsFromDB };

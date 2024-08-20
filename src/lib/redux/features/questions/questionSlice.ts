@@ -8,7 +8,7 @@ export const questionSlice = createSlice({
     name: "questions",
     initialState,
     reducers:{
-        getAllQuestions: (state:iQuestion[], action:PayloadAction<iQuestion[]>)=>{
+        setAllQuestions: (state:iQuestion[], action:PayloadAction<iQuestion[]>)=>{
             return state = action.payload;
         },
         addQuestion: (state:iQuestion[], action:PayloadAction<iQuestion>)=>{
@@ -31,6 +31,6 @@ export const questionSlice = createSlice({
     }
 })
 
-export const { getAllQuestions, addQuestion, modifyQuestion, removeQuestion } = questionSlice.actions;
+export const { setAllQuestions, addQuestion, modifyQuestion, removeQuestion } = questionSlice.actions;
 export const selectQuestions = (state:RootState) => state;
 export default questionSlice.reducer;

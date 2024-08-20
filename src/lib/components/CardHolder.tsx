@@ -8,13 +8,16 @@ const CardHolder = () => {
   const questions = useAppSelector(state => state.questionSlice);
 
   const cards = questions.map(question=>(
-    <Card key={question._id.toString()} />
+    <li  key={question._id.toString()} >
+      <Card questionProps={question} />
+    </li>
   ))
 
   return (
     <div className='flex'>
-      Card Holder -- this will hold all the cards
-      {cards}
+      <ul>
+        {cards}
+      </ul>
     </div>
   )
 }
