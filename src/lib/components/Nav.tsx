@@ -16,7 +16,7 @@ const Nav = () => {
       console.log(response);
       dispatch(setAllQuestions(response));
     })
-  },[dispatch])
+  })
   return (
       <ul className='flex justify-evenly text-xl my-8'>
         <li>
