@@ -8,7 +8,7 @@ interface iQuestionModalProps extends React.PropsWithChildren {
 }
 
 export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
-  const { question, docs, tags, notes, difficulty } = props.question;
+  const { _id, question, docs, tags, notes, difficulty } = props.question;
   
   return (
     <div className={`fixed inset-0 mx-auto my-auto flex justify-center transition-colors duration-700 ease-in-out h-5/6 w-10/12 text-black font-serif ${props.modalOpen? "visible bg-slate-300 border-4 border-stone-300 rounded-lg z-40":"invisible z-0 pointer-events-none"}`}>
@@ -17,8 +17,23 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
         <div className='justify-center items-center my-auto font-bold text-red-600 mx-auto p-4'>
           {question}
         </div>
-        <br />
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minus nulla et voluptas exercitationem maiores atque a inventore, rerum quidem, provident, corrupti dolorum unde amet! Quas molestias magni repellendus totam fuga.
+        <div className='mt-3 mb-6'>
+          <span className='font-bold'>Documentation:</span>
+          <br />
+          {docs}
+        </div>
+        <div className='my-4 mt-8 font-light border-4 border-stone-400 rounded-lg p-2 bg-stone-300'>
+          <span className='font-bold'>Submitted Notes:</span>
+          <ul className='text-sm'>
+            {notes.map(note=><li key={note+_id}>{note}</li>)}
+          </ul>
+        </div>
+        <div className='my-4 mt-8 font-light border-4 border-stone-400 rounded-lg p-2 bg-stone-300'>
+          <span className='font-bold'>Tags: </span>
+          <ul className='mt-1 text-sm'>
+            {tags.map(tag=> <li key={tag+_id}>{tag}</li>)}
+          </ul>
+        </div>
       </div>
     </div>
   )
