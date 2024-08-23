@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import { iQuestion } from "../model/question/iquestion";
+import { QuestionModal } from "./QuestionModal";
 
 const Card = (props: { questionProps: iQuestion }) => {
   const { question, docs, tags, notes, difficulty } = props.questionProps;
-  const [flipped, setFlip] = useState<Boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const renderedTags:string[] = tags.map((tag) => {
     if (tag != tags[tags.length - 1]) {
@@ -13,6 +14,12 @@ const Card = (props: { questionProps: iQuestion }) => {
     }
     return tag;
   });
+
+  const modalProps = {
+    question: props.questionProps,
+    modalOpen,
+    onClose: ()=>setModalOpen(false)
+  }
 
   return (
     <div className="w-[300px] h-[320px] bg-transparent my-2 text-center group perspective rounded-t-lg rounded-b-md">
@@ -47,12 +54,13 @@ const Card = (props: { questionProps: iQuestion }) => {
           </div>
           <div className="h-[15vh]"></div>
           <div className="self-center -mt-1">
-            <button className="transition duration-300 ease-in-out bg-indigo-300 border-indigo-500 rounded-full w-[80px] h-[35px] text-xs hover:bg-indigo-500 active:text-slate-200 active:bg-indigo-900 active:border-0">
+            <button className="transition duration-300 ease-in-out bg-indigo-300 border-indigo-500 rounded-full w-[80px] h-[35px] text-xs hover:bg-indigo-500 active:text-slate-200 active:bg-indigo-900 active:border-0" onClick={()=>setModalOpen(true)}>
               Full Details
             </button>
           </div>
         </div>
       </div>
+      <QuestionModal question={props.questionProps} modalOpen={modalOpen} onModalClose={()=>setModalOpen(false)} />
     </div>
   );
 };

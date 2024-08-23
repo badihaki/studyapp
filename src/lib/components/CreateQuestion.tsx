@@ -124,6 +124,8 @@ const CreateQuestion = () => {
                     <option value={"JavaScript"}>JavaScript</option>
                     <option value={"React"}>React</option>
                     <option value={"Angular"}>Angular</option>
+                    <option value={"Frontend"}>General Frontend</option>
+                    <option value={"Backend"}>General Backend</option>
                 </select>
                 <br />
                 Difficulty:
