@@ -33,5 +33,4 @@ Library
     question data interface
 
 ### Next Moves
-- need to add first question to the database
-- need to pull initial questions
+- switch from actions to callin actions from an api
