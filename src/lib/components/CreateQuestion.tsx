@@ -5,9 +5,12 @@ import { difficultyLevel, iQuestion } from '../model/question/iquestion';
 import { addQuestionToDB } from '../model/question/questionActions';
 import { useAppDispatch } from '../redux/hooks';
 import { addQuestion } from '../redux/features/questions/questionSlice';
+import axios from 'axios';
 
 const CreateQuestion = () => {
     const [showForm, setShowForm] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [err, setErr] = useState<string>("");
     const [form, setForm] = useState<{
         question: string,
         docs: string,
@@ -74,10 +77,11 @@ const CreateQuestion = () => {
         setForm(updatedForm);
     }
 
-    function handleSubmit(e:FormEvent){
+    async function handleSubmit(e:FormEvent){
         e.preventDefault();
         // console.log("form");
         // console.log(form);
+        setLoading(true);
         const question:iQuestion = {
             _id: "",
             question: form.question,
@@ -86,16 +90,23 @@ const CreateQuestion = () => {
             notes:[form.notes],
             difficulty: form.level
         };
-        // console.log("question");
-        // console.log(question);
-        addQuestionToDB(question).then(data=>{
-            const response = JSON.parse(data);
-            console.log(response);
-            
-            // dispatch the new question to our overall questions <<<< TEST
-            dispatch(addQuestion(response));
-        });
-        clearForm();
+        try{
+            const response = await axios.post("api/questions/new", question);
+            // console.log(response.data.data);
+            dispatch(addQuestion(response.data.data));
+        }
+        catch(err:any){
+            // console.log(err.response.data.error);
+            setErr(err.response.data.error);
+        }
+        finally{
+            clearForm();
+            setTimeout(() => {
+                setLoading(false);
+                setErr("");
+            }, 5000);
+            // console.log("done");
+        }
     }
 
     function clearForm(){
@@ -124,6 +135,8 @@ const CreateQuestion = () => {
                     <option value={"JavaScript"}>JavaScript</option>
                     <option value={"React"}>React</option>
                     <option value={"Angular"}>Angular</option>
+                    <option value={"C#"}>C#</option>
+                    <option value={"Rails"}>Ruby on RAILs</option>
                     <option value={"Frontend"}>General Frontend</option>
                     <option value={"Backend"}>General Backend</option>
                 </select>
@@ -135,9 +148,14 @@ const CreateQuestion = () => {
                     <option value={"2"}>Advance</option>
                 </select>
                 <br />
-                <button className='bg-gray-200 text-black font-semibold border-8 border-black rounded-full py-1 px-2 mx-8' type='submit'>Submit</button>
+                <button className='transition-all duration-200 bg-gray-200 text-black font-semibold border-8 border-black rounded-full py-1 px-2 mx-8 hover:bg-gray-400 active:bg-slate-700 active:text-stone-100' type='submit' disabled={loading} >{loading ? "Loading":"Submit"}</button>
             </form>
         :""}
+        {err !== "" ? 
+        <div className='bg-opacity-75 bg-red-900 text-slate-300 font-semibold text-sm w-fit h-fit p-2 m-2 rounded-full'>
+            {err}
+        </div>
+        : ""}
     </>
   )
 }

@@ -17,7 +17,8 @@ const addQuestionToDB = async (question:iQuestion)=>{
         console.log(newQuestion);
         newQuestion.save();
         newQuestion._id = newQuestion._id.toString();
-        return JSON.stringify(newQuestion);
+        // return JSON.stringify(newQuestion);
+        return newQuestion;
     }
     catch(err:unknown){
         console.log(err as Object);

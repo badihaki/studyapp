@@ -12,19 +12,13 @@ const Nav = () => {
   
   const getQuestions = async ()=>{
     const respone = await axios.get("/api/questions/getAll");
-    console.log(respone.data.data);
+    // console.log(respone.data.data);
+    dispatch(setAllQuestions(respone.data.data));
   }
 
   useEffect(()=>{
-    // getQuestionsFromDB().then(data=>{
-    //   // console.log("getting questions");
-    //   const response = JSON.parse(data);
-    //   console.log("setting all questions:");
-    //   console.log(response);
-    //   dispatch(setAllQuestions(response));
-    // })
     getQuestions();
-  }, [])
+  })
   return (
       <ul className='flex justify-evenly text-xl my-8'>
         <li>

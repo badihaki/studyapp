@@ -1,4 +1,3 @@
-import { iQuestion } from "@/lib/model/question/iquestion";
 import { getQuestionsFromDB } from "@/lib/model/question/questionActions";
 import connectDB from "@/lib/mongodb/connectDB";
 import { NextRequest, NextResponse } from "next/server";
