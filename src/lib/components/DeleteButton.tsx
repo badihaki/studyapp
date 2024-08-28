@@ -1,6 +1,8 @@
 import React, { FormEvent, FormEventHandler, useState } from 'react'
 import { iQuestion } from '../model/question/iquestion'
 import axios from 'axios';
+import { useAppDispatch } from '../redux/hooks';
+import { removeQuestion } from '../redux/features/questions/questionSlice';
 
 interface iDeleteButtonProps extends React.PropsWithChildren {
   _id: String
@@ -9,9 +11,10 @@ interface iDeleteButtonProps extends React.PropsWithChildren {
 export const DeletButton: React.FC<iDeleteButtonProps> = (props) => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [deleteStr, setDelStr] = useState<string>("");
+  const dispatch = useAppDispatch();
 
     function handleDeleteClick(){
-    console.log(props._id);
+    // console.log(props._id);
     setIsDeleting(!isDeleting);
     }
 
@@ -19,7 +22,8 @@ export const DeletButton: React.FC<iDeleteButtonProps> = (props) => {
         e.preventDefault();
         try{
             const idToDel = await axios.put(`api/questions/delete/${props._id}`, {id:props._id});
-            console.log(idToDel);
+            // console.log(idToDel);
+            dispatch(removeQuestion(idToDel.data.id))
         }
         catch(err:any){
             console.log(err);

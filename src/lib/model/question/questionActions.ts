@@ -3,6 +3,7 @@
 import mongoose from "mongoose"
 import { iQuestion } from "./iquestion"
 import Question from "./questionSchema"
+import { isCompositeComponent } from "react-dom/test-utils"
 
 const addQuestionToDB = async (question:iQuestion)=>{
     try{
@@ -33,4 +34,15 @@ const getQuestionsFromDB = async ()=>{
     // return JSON.stringify(questions);
 }
 
-export { addQuestionToDB, getQuestionsFromDB };
+const removeQuestionFromDB = async (id:string) => {
+    try{
+        console.log("deleting " + id)
+        await Question.deleteOne({_id:id});
+        return {id};
+    }
+    catch(err:any){
+        return {error:err};
+    }
+}
+
+export { addQuestionToDB, getQuestionsFromDB, removeQuestionFromDB };
