@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { iQuestion } from "../model/question/iquestion";
 import { QuestionModal } from "./QuestionModal";
-import { DeletButton } from "./DeleteButton";
 
 const Card = (props: { questionProps: iQuestion }) => {
   const { question, docs, tags, notes, difficulty } = props.questionProps;
@@ -15,12 +14,6 @@ const Card = (props: { questionProps: iQuestion }) => {
     }
     return tag;
   });
-
-  const modalProps = {
-    question: props.questionProps,
-    modalOpen,
-    onClose: ()=>setModalOpen(false)
-  }
 
   return (
     <div className="justify-center items-center h-fit">
@@ -60,7 +53,6 @@ const Card = (props: { questionProps: iQuestion }) => {
                   Full Details
                 </button>
               </div>
-              <DeletButton _id={props.questionProps._id} />
             </div>
           </div>
         </div>
