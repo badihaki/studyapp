@@ -1,5 +1,5 @@
 import mongoose, { model, Schema } from "mongoose";
-import { iQuestion } from "./iquestion";
+import { difficultyLevel, iQuestion } from "./iquestion";
 
 const QuestionSchema = new  Schema<iQuestion>({
     _id: {
@@ -7,7 +7,6 @@ const QuestionSchema = new  Schema<iQuestion>({
     },
     question:{
         type: String,
-        unique:true,
         required:true
     },
     docs:{
@@ -21,7 +20,9 @@ const QuestionSchema = new  Schema<iQuestion>({
     notes: {
         type: []
     },
-    difficulty: String
+    difficulty: {
+        type: Number
+    }
 })
 
 const Question = mongoose.models?.Question || model<iQuestion>("Question", QuestionSchema);

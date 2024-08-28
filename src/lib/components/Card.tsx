@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { iQuestion } from "../model/question/iquestion";
 import { QuestionModal } from "./QuestionModal";
+import { DeletButton } from "./DeleteButton";
 
 const Card = (props: { questionProps: iQuestion }) => {
   const { question, docs, tags, notes, difficulty } = props.questionProps;
@@ -53,11 +54,13 @@ const Card = (props: { questionProps: iQuestion }) => {
               <br />
               {renderedTags}
             </div>
-            <div className="h-[15vh]"></div>
-            <div className="self-center -mt-1">
-              <button className="transition duration-300 ease-in-out bg-indigo-300 border-indigo-500 rounded-full w-[80px] h-[35px] text-xs hover:bg-indigo-500 active:text-slate-200 active:bg-indigo-900 active:border-0" onClick={()=>setModalOpen(true)}>
-                Full Details
-              </button>
+            <div className="relative -bottom-10">
+              <div className="self-center my-6">
+                <button className="relative transition duration-300 ease-in-out bg-indigo-300 border-indigo-500 rounded-full w-[80px] h-[35px] text-xs hover:bg-indigo-500 active:text-slate-200 active:bg-indigo-900 active:border-0" onClick={()=>setModalOpen(true)}>
+                  Full Details
+                </button>
+              </div>
+              <DeletButton _id={props.questionProps._id} />
             </div>
           </div>
         </div>

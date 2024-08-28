@@ -81,15 +81,15 @@ const CreateQuestion = () => {
         e.preventDefault();
         // console.log("form");
         // console.log(form);
-        setLoading(true);
         const question:iQuestion = {
             _id: "",
             question: form.question,
             docs:form.docs,
             tags: [form.subject],
             notes:[form.notes],
-            difficulty: form.level
+            difficulty: Number(form.level)
         };
+        setLoading(true);
         try{
             const response = await axios.post("api/questions/new", question);
             // console.log(response.data.data);
@@ -103,10 +103,13 @@ const CreateQuestion = () => {
             clearForm();
             setTimeout(() => {
                 setLoading(false);
+            }, 3200);
+            setTimeout(() => {
                 setErr("");
             }, 5000);
             // console.log("done");
         }
+        // console.log(question)
     }
 
     function clearForm(){
@@ -135,7 +138,7 @@ const CreateQuestion = () => {
                     <option value={"JavaScript"}>JavaScript</option>
                     <option value={"React"}>React</option>
                     <option value={"Angular"}>Angular</option>
-                    <option value={"C#"}>C#</option>
+                    <option value={"dotNet"}>C#</option>
                     <option value={"Rails"}>Ruby on RAILs</option>
                     <option value={"Frontend"}>General Frontend</option>
                     <option value={"Backend"}>General Backend</option>
