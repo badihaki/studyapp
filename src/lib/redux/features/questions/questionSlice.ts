@@ -15,7 +15,7 @@ export const questionSlice = createSlice({
             state.push(action.payload);
             return state;
         },
-        modifyQuestion: (state:iQuestion[], action:PayloadAction<iQuestion>)=>{
+        updateQuestion: (state:iQuestion[], action:PayloadAction<iQuestion>)=>{
             return state.map(question=>{
                 if(question._id === action.payload._id){
                     question = action.payload;
@@ -31,6 +31,6 @@ export const questionSlice = createSlice({
     }
 })
 
-export const { setAllQuestions, addQuestion, modifyQuestion, removeQuestion } = questionSlice.actions;
+export const { setAllQuestions, addQuestion, updateQuestion, removeQuestion } = questionSlice.actions;
 export const selectQuestions = (state:RootState) => state;
 export default questionSlice.reducer;

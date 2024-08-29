@@ -1,7 +1,11 @@
+"use client"
+
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { difficultyLevel, iQuestion } from '../model/question/iquestion'
 import { DeletButton } from './DeleteButton';
 import axios from 'axios';
+import { useAppDispatch } from '../redux/hooks';
+import { updateQuestion } from '../redux/features/questions/questionSlice';
 
 interface iQuestionModalProps extends React.PropsWithChildren {
   question: iQuestion,
@@ -12,6 +16,7 @@ interface iQuestionModalProps extends React.PropsWithChildren {
 export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
   const { _id, question, docs, tags, notes, difficulty } = props.question;
   const [inEditMode, setInEditMode] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   
   const initialState:iQuestion = {
     _id,
@@ -29,6 +34,7 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
     tags: string[],
     notes: string[]
   }
+
   const [stringForm, setStringsForm] = useState<iQuestionStringsForm>(initialState);
   const [arrayForm, setArrForm] = useState<iQuestionArraysForm>(initialState);
   const [newNote, setNewNote] = useState<string>("");
@@ -39,6 +45,8 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
     setNewNote("");
     setNewTag("");
   }
+
+  const dispatch = useAppDispatch();
 
   const handleFormChange = (e:{target:{name:string, value:string}})=>{
     const key = e.target.name;
@@ -61,7 +69,28 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
     }
     
     return(
-      <li className='grid grid-cols-2 my-2 border-2 border-slate-200 px-2 pt-2 pb-1 rounded-lg w-fit'>
+      <li className='my-2 border-2 border-slate-200 px-2 pt-2 pb-1 rounded-lg w-fit'>
+        {props.text}
+        {inEditMode?
+          <button onClick={handleDeleteClick} className='bg-red-700 border-4 border-red-800 text-slate-100 w-fit h-fit px-2 rounded-full ml-5 font-bold '>X</button>
+          :
+          ""
+        }
+      </li>
+    )
+  }
+  function TagListElement(props:{text:string}){
+    const handleDeleteClick = (e:FormEvent)=>{
+      const newTags = arrayForm.tags.filter(tag=>{
+        return tag !== props.text;
+      })
+      const newArrForm = {...arrayForm};
+      newArrForm.tags = newTags;
+      setArrForm(newArrForm);
+    }
+    
+    return(
+      <li className='my-2 border-2 border-slate-200 px-2 pt-2 pb-1 rounded-lg w-fit'>
         {props.text}
         {inEditMode?
           <button onClick={handleDeleteClick} className='bg-red-700 border-4 border-red-800 text-slate-100 w-fit h-fit px-2 rounded-full ml-5 font-bold '>X</button>
@@ -93,7 +122,8 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
   }
   
   const handleSubmitEdits = async (e:FormEvent)=>{
-    e.preventDefault();
+    // e.preventDefault();
+    
     const edits:iQuestion = {
       _id:props.question._id,
       question: stringForm.question,
@@ -102,9 +132,21 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
       notes:arrayForm.notes,
       difficulty:difficultyLevel.beginner
     }
-    // console.log(edits);
-    const response = await axios.put("api/questions/update", edits);
-    console.log(response);
+
+    setLoading(true);
+    try{
+      const response = await axios.put("api/questions/update", edits);
+      // console.log(response.data.question);
+      await dispatch(updateQuestion(response.data.question));
+    }
+    catch(err:any){}
+    finally{
+      resetForm();
+      setInEditMode(false);
+      setLoading(false);
+
+    }
+    // console.log(response);
   }
 
   return (
@@ -156,7 +198,7 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
         <div className='my-4 mt-8 font-light border-4 border-stone-400 rounded-lg p-2 bg-stone-300'>
           <span className='font-bold'>Submitted Notes:</span>
           <ul className='text-sm list-disc list-inside'>
-            {arrayForm.notes.map(note=><NoteListElement key={`${props.question._id}-note-${note.slice(0,3)}`} text={note} />)}
+            {arrayForm.notes.map(note=><NoteListElement key={`${props.question._id}-note-${note.slice(0,6)}`} text={note} />)}
           </ul>
           {
             inEditMode ?
@@ -170,16 +212,18 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
         </div>
         
         {/* Tags */}
-        <div className='my-4 mt-8 font-light border-4 border-stone-400 rounded-lg p-2 bg-stone-300'>
+        <div className='relative my-4 mt-8 font-light '>
           <span className='font-bold'>Tags: </span>
-          <ul className='mt-1 text-sm list-disc list-inside'>
-            {arrayForm.tags.map(tag=> <li key={tag+_id}>{tag}</li>)}
-          </ul>
+          <div className='fixed border-4 border-stone-400 rounded-lg p-2 bg-stone-300'>
+            <ul className='mt-1 text-sm list-disc list-inside grid grid-cols-3 w-full'>
+              {arrayForm.tags.map(tag=> <TagListElement text={tag} key={`${props.question._id}-tag-${tag.slice(0,6)}`} />)}
+            </ul>
+          </div>
           {inEditMode ?
           <div>
             Add a new tag
             <br />
-            <input value={newTag} onChange={(e)=>setNewTag(e.target.value)} /><span onClick={handleTagSubmit} className='ml-4 bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center cursor-pointer'>Add new note</span>
+            <input value={newTag} onChange={(e)=>setNewTag(e.target.value)} /><span onClick={handleTagSubmit} className='ml-4 bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center cursor-pointer'>Add new tag</span>
           </div> : ""}
         </div>
 
@@ -191,16 +235,16 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
         {
           inEditMode ? 
           <div className='w-full text-center'>
-            <button type='submit' onClick={handleSubmitEdits} className='bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center'>Submit Edits</button>
+            <button type='submit' disabled={loading} onClick={handleSubmitEdits} className='bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center relative -bottom-0 -right-full'>{loading? "Loading...  " : "Submit Edits"}</button>
           </div>
           : 
-          <div className='relative h-fit w-fit p-4 -bottom-10 text-center border-4 border-red-600 bg-rose-500 mx-auto'>
+          <div className='relative h-fit w-fit  p-4 -bottom-0 -right-3/4 text-center border-4 border-red-600 bg-rose-500 mx-auto'>
             {/* This is the DELETE area 's why it's DANGER colored */}
           <div className='font-semibold text-red-800 bg-opacity-35 bg-slate-500 w-fit mx-auto text-center mb-4'>
             DANGER
           </div>
-          {props.modalOpen ? <DeletButton _id={props.question._id} /> : "" }
-        </div>
+            {props.modalOpen ? <DeletButton _id={props.question._id} /> : "" }
+          </div>
         }
       </div>
     </div>
