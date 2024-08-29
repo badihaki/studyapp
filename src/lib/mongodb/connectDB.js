@@ -14,7 +14,7 @@ if(!cached){
 
 async function connectDB() {
     if(cached.conn){
-        console.log("db already connected");
+        // console.log("db already connected");
         return cached.conn;
     }
 

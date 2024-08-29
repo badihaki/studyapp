@@ -51,16 +51,14 @@ export const DeletButton: React.FC<iDeleteButtonProps> = (props) => {
         {isDeleting ? 
           <div className="bg-slate-100 py-4">
             If sure type DELETE into the dialogue box and press the delete button
-            <form onSubmit={handleDeleteSubmission}>
-                <input name='delete' value={deleteStr} onChange={(e)=>setDelStr(e.target.value)} />
-                <br />
-                <button onClick={(e)=>{
-                    e.preventDefault();
-                    setIsDeleting(false);
-                    }} className='bg-indigo-300 text-stone-600 font-semibold rounded-full p-3 hover:bg-indigo-800 hover:text-stone-800'>Cancel</button>
-                <br />
-                <button disabled={loading} type='submit' className='disabled:bg-opacity-30 bg-red-700 text-slate-300 font-semibold rounded-full p-3 hover:bg-red-800 hover:text-slate-100'>Submit</button>
-            </form>
+            <input name='delete' value={deleteStr} onChange={(e)=>setDelStr(e.target.value)} className='border-2 border-red-800 mx-4' />
+            <br />
+            <button onClick={(e)=>{
+                e.preventDefault();
+                setIsDeleting(false);
+                }} className='bg-indigo-300 text-stone-600 font-semibold rounded-full p-3 hover:bg-indigo-800 hover:text-stone-800'>Cancel</button>
+            <br />
+            <button disabled={loading} onClick={handleDeleteSubmission} type='submit' className='disabled:bg-opacity-30 bg-red-700 text-slate-300 font-semibold rounded-full p-3 hover:bg-red-800 hover:text-slate-100'>Submit</button>
           </div>
         :
           ""

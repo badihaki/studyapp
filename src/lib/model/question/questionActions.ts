@@ -3,11 +3,10 @@
 import mongoose from "mongoose"
 import { iQuestion } from "./iquestion"
 import Question from "./questionSchema"
-import { isCompositeComponent } from "react-dom/test-utils"
 
 const addQuestionToDB = async (question:iQuestion)=>{
     try{
-        console.log(question);
+        // console.log(question);
         const newQuestion = new Question({
             question: question.question,
             docs: question.docs,
@@ -16,15 +15,30 @@ const addQuestionToDB = async (question:iQuestion)=>{
             difficultyLevel: question.difficulty,
             _id: new mongoose.Types.ObjectId
         })
-        // console.log(newQuestion);
         newQuestion.save();
         newQuestion._id = newQuestion._id.toString();
-        // return JSON.stringify(newQuestion);
         return newQuestion;
     }
     catch(err:any){
         console.log(err);
         return err.message;
+    }
+}
+
+const updateQuestionInDB = async (question:iQuestion)=>{
+    try{
+        const foundQuestion = await Question.findById(question._id);
+        if(!foundQuestion){
+            throw new Error("Couldn't find the question");
+        }
+
+        await Question.updateOne({_id:question._id}, question);
+        const updatedQuestion = await Question.findById(question._id);
+        return updatedQuestion;
+    }
+    catch(err:any){
+        console.log(err);
+        return err;
     }
 }
 
@@ -45,4 +59,4 @@ const removeQuestionFromDB = async (id:string) => {
     }
 }
 
-export { addQuestionToDB, getQuestionsFromDB, removeQuestionFromDB };
+export { addQuestionToDB, getQuestionsFromDB, updateQuestionInDB, removeQuestionFromDB };
