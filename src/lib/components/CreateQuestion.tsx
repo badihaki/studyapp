@@ -123,10 +123,11 @@ const CreateQuestion = () => {
     }
 
   return (
-    <>
+    <div className='text-center w-full mx-auto'>
         <button onClick={()=>setShowForm(!showForm)}>{showForm? "Hide Question Form":"Show Question Form"}</button>
         {showForm? 
-            <form className='bg-gray-900 border space-y-2' onSubmit={handleSubmit}>
+        <div className='w-full'>
+            <form className='bg-gray-900 border space-y-2 w-fit mx-auto' onSubmit={handleSubmit}>
                 Question: <input className='text-black font-semibold' name='question' value={form.question} onChange={handleFormChange} />
                 <br />
                 Official Docs: <input className='text-black font-semibold' name='docs' value={form.docs} onChange={handleFormChange} />
@@ -153,13 +154,14 @@ const CreateQuestion = () => {
                 <br />
                 <button className='transition-all duration-200 bg-gray-200 text-black font-semibold border-8 border-black rounded-full py-1 px-2 mx-8 hover:bg-gray-400 active:bg-slate-700 active:text-stone-100' type='submit' disabled={loading} >{loading ? "Loading":"Submit"}</button>
             </form>
+        </div>
         :""}
         {err !== "" ? 
         <div className='bg-opacity-75 bg-red-900 text-slate-300 font-semibold text-sm w-fit h-fit p-2 m-2 rounded-full'>
             {err}
         </div>
         : ""}
-    </>
+    </div>
   )
 }
 

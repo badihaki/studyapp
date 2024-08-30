@@ -25,10 +25,10 @@ const Nav = () => {
             <Link href={"/"}>Home</Link>
         </li>
         <li>
-            <Link href={"/"}>React Questions</Link>
+            <Link href={"/react"}>React Questions</Link>
         </li>
         <li>
-            <Link href={"/"}>Angular Questions</Link>
+            <Link href={"/angular"}>Angular Questions</Link>
         </li>
       </ul>
   )
