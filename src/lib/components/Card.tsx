@@ -8,12 +8,7 @@ const Card = (props: { questionProps: iQuestion }) => {
   const { question, docs, tags, notes, difficulty } = props.questionProps;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const renderedTags:string[] = tags.map((tag) => {
-    if (tag != tags[tags.length - 1]) {
-      return tag + ", ";
-    }
-    return tag;
-  });
+  const renderedTags = tags.slice(0,4).map((tag) => <li key={`${props.questionProps._id.slice(0,5)}-${tag.slice(0,3)}`} className="bg-opacity-25 bg-slate-700 mx-auto h-fit w-fit px-2 py-1 my-1 rounded-full">{tag}</li>)
 
   return (
     <div className="justify-center items-center h-fit">
@@ -45,7 +40,9 @@ const Card = (props: { questionProps: iQuestion }) => {
                 Tags:
               </span>
               <br />
-              {renderedTags}
+              <ul>
+                {renderedTags}
+              </ul>
             </div>
             <div className="relative -bottom-10">
               <div className="self-center my-6">

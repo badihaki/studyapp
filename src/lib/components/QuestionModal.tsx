@@ -150,7 +150,7 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
   }
 
   return (
-    <div className={`fixed inset-0 mx-auto my-auto flex justify-center transition duration-700 ease-in-out h-5/6 w-10/12 text-black font-serif ${props.modalOpen? "visible bg-slate-300 border-4 border-stone-300 rounded-lg z-40":"invisible z-0 pointer-events-none"}`}>
+    <div className={`fixed inset-0 mx-auto my-auto flex justify-center transition duration-700 ease-in-out h-full w-10/12 text-black font-serif ${props.modalOpen? "visible bg-slate-400 border-4 border-stone-500 rounded-lg z-40":"invisible z-0 pointer-events-none"}`}>
 
       {/* Close modal button */}
       <button onClick={(e)=>{
@@ -171,10 +171,10 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
         }} className={`absolute right-20 top-1 bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center`} >{ inEditMode ? "Cancel Edits" : "Edit" }</button>
       
       {/* Info Container */}
-      <div className='mt-16 justify-center items-center bg-slate-800 bg-opacity-45 mx-auto px-10 my-auto'>
+      <div className='mt-16 justify-center items-center bg-slate-800 border-2 border-slate-600 border-t-slate-400 bg-opacity-45 mx-auto px-10 my-auto'>
         
         {/* Question */}
-        <div className='justify-center text-center my-auto font-bold text-red-600 mx-auto p-4 text-3xl'>
+        <div className='justify-center text-center font-bold text-red-600 mx-auto mb-2 py-4 text-3xl bg-slate-400 rounded-full border-4 border-slate-600'>
           <span className='text-black font-sans'>Question:</span>
           <br />
           {inEditMode?
@@ -184,7 +184,7 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
         </div>
 
         {/* Docs */}
-        <div className='mt-3 mb-6 mx-auto text-center'>
+        <div className='mt-3 mb-6 mx-auto text-center bg-slate-400 border-2 border-slate-600 px-4 py-2 rounded-full'>
           <span className='font-bold font-sans text-lg'>Documentation:</span>
           <br />
           {inEditMode ?
@@ -212,13 +212,11 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
         </div>
         
         {/* Tags */}
-        <div className='relative my-4 mt-8 font-light '>
+        <div className='relative my-4 mt-8 font-light border-4 border-stone-400 rounded-lg p-2 pr-0 bg-stone-300'>
           <span className='font-bold'>Tags: </span>
-          <div className='fixed border-4 border-stone-400 rounded-lg p-2 bg-stone-300'>
-            <ul className='mt-1 text-sm list-disc list-inside grid grid-cols-3 w-full'>
-              {arrayForm.tags.map(tag=> <TagListElement text={tag} key={`${props.question._id}-tag-${tag.slice(0,6)}`} />)}
-            </ul>
-          </div>
+          <ul className='mt-1 text-sm list-disc list-inside w-full grid grid-cols-3'>
+            {arrayForm.tags.map(tag=> <TagListElement text={tag} key={`${props.question._id}-tag-${tag.slice(0,6)}`} />)}
+          </ul>
           {inEditMode ?
           <div>
             Add a new tag
@@ -235,7 +233,7 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
         {
           inEditMode ? 
           <div className='w-full text-center'>
-            <button type='submit' disabled={loading} onClick={handleSubmitEdits} className='bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center relative -bottom-0 -right-full'>{loading? "Loading...  " : "Submit Edits"}</button>
+            <button type='submit' disabled={loading} onClick={handleSubmitEdits} className='bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center relative -bottom-0 -right-3/4'>{loading? "Loading...  " : "Submit Edits"}</button>
           </div>
           : 
           <div className='relative h-fit w-fit  p-4 -bottom-0 -right-3/4 text-center border-4 border-red-600 bg-rose-500 mx-auto'>

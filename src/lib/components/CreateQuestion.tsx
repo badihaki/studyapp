@@ -124,7 +124,9 @@ const CreateQuestion = () => {
 
   return (
     <div className='text-center w-full mx-auto'>
-        <button onClick={()=>setShowForm(!showForm)}>{showForm? "Hide Question Form":"Show Question Form"}</button>
+        <button onClick={()=>setShowForm(!showForm)} 
+        className={"font-semibold border-2 border-slate-300 px-2 my-2 rounded-full transition-all duration-500 hover:bg-slate-400 hover:text-black hover:border-black"}
+        >{showForm? "Hide Question Form":"Show Question Form"}</button>
         {showForm? 
         <div className='w-full'>
             <form className='bg-gray-900 border space-y-2 w-fit mx-auto' onSubmit={handleSubmit}>

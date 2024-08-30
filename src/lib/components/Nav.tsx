@@ -20,14 +20,14 @@ const Nav = () => {
     getQuestions();
   })
   return (
-      <ul className='flex justify-evenly text-xl my-8'>
-        <li>
+      <ul className='flex justify-evenly text-xl mt-8 mb-2 bg-slate-700 bg-opacity-35 py-2 rounded-full'>
+        <li className='transition-all duration-300 font-semibold font-serif rounded-full my-2 px-2 py-1 border-2 border-slate-700 bg-slate-800 hover:text-black hover:bg-slate-400 active:bg-slate-100'>
             <Link href={"/"}>Home</Link>
         </li>
-        <li>
+        <li className='transition-all duration-300 font-semibold font-serif rounded-full my-2 px-2 py-1 border-2 border-slate-700 bg-slate-800 hover:text-black hover:bg-slate-400 active:bg-slate-100'>
             <Link href={"/react"}>React Questions</Link>
         </li>
-        <li>
+        <li className='transition-all duration-300 font-semibold font-serif rounded-full my-2 px-2 py-1 border-2 border-slate-700 bg-slate-800 hover:text-black hover:bg-slate-400 active:bg-slate-100'>
             <Link href={"/angular"}>Angular Questions</Link>
         </li>
       </ul>
