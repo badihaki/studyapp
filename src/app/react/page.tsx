@@ -8,12 +8,12 @@ function ReactPage() {
     const questions = useAppSelector(state => state.questionSlice);
     const reactQuestions = questions.filter(question => question.tags.includes("React"));
     return (
-      <div>
+      <main id="react-questions">
           <Header text="React Questions" />
           <div className="w-fit mx-auto text-center justify-center">
             <CardHolder questions={reactQuestions} />
           </div>
-      </div>
+      </main>
     )
 }
 

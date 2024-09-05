@@ -69,10 +69,10 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
     }
     
     return(
-      <li className='my-2 border-2 border-slate-200 px-2 pt-2 pb-1 rounded-lg w-fit'>
+      <li id={`note-${props.text}`} className='my-2 border-2 border-slate-200 px-2 pt-2 pb-1 rounded-lg w-fit'>
         {props.text}
         {inEditMode?
-          <button onClick={handleDeleteClick} className='bg-red-700 border-4 border-red-800 text-slate-100 w-fit h-fit px-2 rounded-full ml-5 font-bold '>X</button>
+          <button role='delete-note-button' aria-label='Delete this note' id={`delete-note-${props.text}`} onClick={handleDeleteClick} className='bg-red-700 border-4 border-red-800 text-slate-100 w-fit h-fit px-2 rounded-full ml-5 font-bold '>X</button>
           :
           ""
         }
@@ -90,10 +90,10 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
     }
     
     return(
-      <li className='my-2 border-2 border-slate-200 px-2 pt-2 pb-1 rounded-lg w-fit'>
+      <li id={`tag-${props.text}`} className='my-2 border-2 border-slate-200 px-2 pt-2 pb-1 rounded-lg w-fit'>
         {props.text}
         {inEditMode?
-          <button onClick={handleDeleteClick} className='bg-red-700 border-4 border-red-800 text-slate-100 w-fit h-fit px-2 rounded-full ml-5 font-bold '>X</button>
+          <button role='delete-tag-button' aria-label='Delete this tag' id={`delete-tag-${props.text}`} onClick={handleDeleteClick} className='bg-red-700 border-4 border-red-800 text-slate-100 w-fit h-fit px-2 rounded-full ml-5 font-bold '>X</button>
           :
           ""
         }
@@ -150,19 +150,22 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
   }
 
   return (
-    <div className={`fixed inset-0 mx-auto my-auto flex justify-center transition duration-700 ease-in-out h-full w-10/12 text-black font-serif ${props.modalOpen? "visible bg-slate-400 border-4 border-stone-500 rounded-lg z-40":"invisible z-0 pointer-events-none"}`}>
+    <div id={`details-${props.question.question}`} className={`fixed inset-0 mx-auto my-auto flex justify-center transition duration-700 ease-in-out h-full w-10/12 text-black font-serif ${props.modalOpen? "visible bg-slate-400 border-4 border-stone-500 rounded-lg z-40":"invisible z-0 pointer-events-none"}`}>
 
       {/* Close modal button */}
-      <button onClick={(e)=>{
+      <button id={`close-details-${props.question.question}`} role='close-button' aria-label='Close the modal window' 
+      onClick={(e)=>{
         e.preventDefault();
         if(inEditMode){
           setInEditMode(false);
         }
         props.onModalClose();
-      }} className='absolute right-4 top-1 bg-red-500 border-4 border-red-600 text-stone-900 font-bold text-lg px-3 rounded-full text-center'>X</button>
+      }} 
+      className='absolute right-4 top-1 bg-red-500 border-4 border-red-600 text-stone-900 font-bold text-lg px-3 rounded-full text-center'>X</button>
       
       {/* Edit mode button */}
-      <button onClick={(e)=>{
+      <button id={`edit-details-${props.question.question}`} role='edit-button' aria-label='Edit question details'
+      onClick={(e)=>{
         e.preventDefault();
         if(inEditMode){
           resetForm();
@@ -171,31 +174,31 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
         }} className={`absolute right-20 top-1 bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center`} >{ inEditMode ? "Cancel Edits" : "Edit" }</button>
       
       {/* Info Container */}
-      <div className='mt-16 justify-center items-center bg-slate-800 border-2 border-slate-600 border-t-slate-400 bg-opacity-45 mx-auto px-10 my-auto'>
+      <div id={`information-${props.question.question}`} aria-label='Full details' className='mt-16 justify-center items-center bg-slate-800 border-2 border-slate-600 border-t-slate-400 bg-opacity-45 mx-auto px-10 my-auto'>
         
         {/* Question */}
-        <div className='justify-center text-center font-bold text-red-600 mx-auto mb-2 py-4 text-3xl bg-slate-400 rounded-full border-4 border-slate-600'>
+        <div id={`question-details-${props.question.question}`} className='justify-center text-center font-bold text-red-600 mx-auto mb-2 py-4 text-3xl bg-slate-400 rounded-full border-4 border-slate-600'>
           <span className='text-black font-sans'>Question:</span>
           <br />
           {inEditMode?
-          <input name='question' value={stringForm.question} onChange={handleFormChange} className='border-2 border-slate-400 text-black font-normal text-base py-1 px-2' /> 
+          <input name='question' id={`edit-question-details-${props.question.question}`} value={stringForm.question} onChange={handleFormChange} className='border-2 border-slate-400 text-black font-normal text-base py-1 px-2' /> 
           : 
           question}
         </div>
 
         {/* Docs */}
-        <div className='mt-3 mb-6 mx-auto text-center bg-slate-400 border-2 border-slate-600 px-4 py-2 rounded-full'>
+        <div id={`docs-details-${props.question.question}`} className='mt-3 mb-6 mx-auto text-center bg-slate-400 border-2 border-slate-600 px-4 py-2 rounded-full'>
           <span className='font-bold font-sans text-lg'>Documentation:</span>
           <br />
           {inEditMode ?
-          <input name='docs' value={stringForm.docs} onChange={handleFormChange} className='border-2 border-slate-400 text-black font-normal text-base py-1 px-2 w-full' />
+          <input  id={`edit-docs-details-${props.question.question}`} name='docs' value={stringForm.docs} onChange={handleFormChange} className='border-2 border-slate-400 text-black font-normal text-base py-1 px-2 w-full' />
         :
           docs  
         }
         </div>
         
         {/* Notes are below */}
-        <div className='my-4 mt-8 font-light border-4 border-stone-400 rounded-lg p-2 bg-stone-300'>
+        <div  id={`notes-details-${props.question.question}`} className='my-4 mt-8 font-light border-4 border-stone-400 rounded-lg p-2 bg-stone-300'>
           <span className='font-bold'>Submitted Notes:</span>
           <ul className='text-sm list-disc list-inside'>
             {arrayForm.notes.map(note=><NoteListElement key={`${props.question._id}-note-${note.slice(0,6)}`} text={note} />)}
@@ -205,14 +208,14 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
           <div>
             Add a new note
             <br />
-            <input value={newNote} onChange={(e)=>setNewNote(e.target.value)} /><span onClick={handleNoteSubmit} className='ml-4 bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center cursor-pointer'>Add new note</span>
+            <input id={`add-note-input-${props.question.question}`} value={newNote} onChange={(e)=>setNewNote(e.target.value)} /><span onClick={handleNoteSubmit} className='ml-4 bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center cursor-pointer'>Add new note</span>
           </div>
           : ""
         }
         </div>
         
         {/* Tags */}
-        <div className='relative my-4 mt-8 font-light border-4 border-stone-400 rounded-lg p-2 pr-0 bg-stone-300'>
+        <div id={`tags-details-${props.question.question}`} className='relative my-4 mt-8 font-light border-4 border-stone-400 rounded-lg p-2 pr-0 bg-stone-300'>
           <span className='font-bold'>Tags: </span>
           <ul className='mt-1 text-sm list-disc list-inside w-full grid grid-cols-3'>
             {arrayForm.tags.map(tag=> <TagListElement text={tag} key={`${props.question._id}-tag-${tag.slice(0,6)}`} />)}
@@ -221,7 +224,7 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
           <div>
             Add a new tag
             <br />
-            <input value={newTag} onChange={(e)=>setNewTag(e.target.value)} /><span onClick={handleTagSubmit} className='ml-4 bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center cursor-pointer'>Add new tag</span>
+            <input id={`add-tag-input-${props.question.question}`} value={newTag} onChange={(e)=>setNewTag(e.target.value)} /><span onClick={handleTagSubmit} className='ml-4 bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center cursor-pointer'>Add new tag</span>
           </div> : ""}
         </div>
 
@@ -233,15 +236,15 @@ export const QuestionModal: React.FC<iQuestionModalProps> = (props) => {
         {
           inEditMode ? 
           <div className='w-full text-center'>
-            <button type='submit' disabled={loading} onClick={handleSubmitEdits} className='bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center relative -bottom-0 -right-3/4'>{loading? "Loading...  " : "Submit Edits"}</button>
+            <button role='submit-edits-button' aria-label='Submit your edits' type='submit' disabled={loading} onClick={handleSubmitEdits} className='bg-indigo-400 border-4 border-blue-500 font-bold w-fit h-fit px-3 py-1 rounded-full text-center relative -bottom-0 -right-3/4'>{loading? "Loading...  " : "Submit Edits"}</button>
           </div>
           : 
-          <div className='relative h-fit w-fit  p-4 -bottom-0 -right-3/4 text-center border-4 border-red-600 bg-rose-500 mx-auto'>
-            {/* This is the DELETE area 's why it's DANGER colored */}
-          <div className='font-semibold text-red-800 bg-opacity-35 bg-slate-500 w-fit mx-auto text-center mb-4'>
-            DANGER
-          </div>
-            {props.modalOpen ? <DeletButton _id={props.question._id} /> : "" }
+          <div id={`delete-question-${props.question.question}`} aria-label='Delete area' className='relative h-fit w-fit  p-4 -bottom-0 -right-3/4 text-center border-4 border-red-600 bg-rose-500 mx-auto'>
+              {/* This is the DELETE area 's why it's DANGER colored */}
+            <div id={`danger-${props.question.question}`} className='font-semibold text-red-800 bg-opacity-35 bg-slate-500 w-fit mx-auto text-center mb-4'>
+              DANGER
+            </div>
+              {props.modalOpen ? <DeletButton _id={props.question._id} /> : "" }
           </div>
         }
       </div>

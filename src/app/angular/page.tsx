@@ -9,12 +9,12 @@ function AngularPage() {
     const questions = useAppSelector(state => state.questionSlice);
     const angularQuestions = questions.filter(question => question.tags.includes("Angular"));
     return (
-      <div>
+      <main id='angular-questions'>
           <Header text='Angular Questions' />
         <div className="w-fit mx-auto text-center justify-center">
           <CardHolder questions={angularQuestions} />
         </div>
-      </div>
+      </main>
     )
 }
 

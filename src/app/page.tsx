@@ -32,7 +32,7 @@ export default function Home() {
 
   function IntroText(){
     return (
-      <section id="introduction" className="px-14 py-5">
+      <section id="instructions" className="px-14 py-5">
         <p>
           Welcome to the <span className="font-mono text-lg text-red-600">Study App</span>. Here you can submit a question to our growling list of interview 
           questions by using the <span className="font-mono text-lg text-red-600">Show Question Form</span> button above this menu. The form to add a new question is accessible 
@@ -57,7 +57,7 @@ export default function Home() {
 
   function ReturningText(){
     return(
-      <section id="introduction-2">
+      <section id="introduction">
         <p>
           Repository of interview questions for those pursuring a career in web development
         </p>
@@ -66,7 +66,7 @@ export default function Home() {
   }
 
   return (
-    <main className="justify-center w-full h-full">
+    <main id="home" className="justify-center w-full h-full">
       <Header text="Study App Home" />
       
       <div className="bg-slate-600 font-semibold w-2/3 mx-auto my-2 rounded-full py-2 px-6 text-center">
@@ -78,9 +78,9 @@ export default function Home() {
       <div>
         <SearchBar searchQueryValue={searchQuery} changeSearchQuery={setSearchQuery} />
       </div>
-      <div className="w-fit mx-auto text-center justify-center">
+      <section className="w-fit mx-auto text-center justify-center">
         <CardHolder questions={filteredQuestions} />
-      </div>
+      </section>
     </main>
   );
 }

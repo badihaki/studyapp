@@ -46,20 +46,23 @@ export const DeletButton: React.FC<iDeleteButtonProps> = (props) => {
     }
 
   return (
-    <div>
-        <button className="bg-red-700 text-slate-300 font-semibold rounded-full p-3 relative hover:bg-red-800 hover:text-slate-100 transition-all duration-200 disabled:bg-red-400 disabled:text-black" onClick={handleDeleteClick} disabled={isDeleting}>DELETE</button>
+    <div id={`delete-question-${props._id}`} aria-label='Deletion area'>
+        <button id={`delete-button-${props._id}`} role='delete-button' aria-label='Delete this question'
+        className="bg-red-700 text-slate-300 font-semibold rounded-full p-3 relative hover:bg-red-800 hover:text-slate-100 transition-all duration-200 disabled:bg-red-400 disabled:text-black" onClick={handleDeleteClick} disabled={isDeleting}>DELETE</button>
         {isDeleting ? 
           <div className="bg-slate-100 pb-4">
             If sure type DELETE into the dialogue box and press the delete button
             <br />
-            <input name='delete' value={deleteStr} onChange={(e)=>setDelStr(e.target.value)} className='border-2 border-red-800 mx-4' />
+            <input name='delete' role='delete-input' aria-label='Type DELETE'
+            value={deleteStr} onChange={(e)=>setDelStr(e.target.value)} className='border-2 border-red-800 mx-4' />
             <br />
-            <button onClick={(e)=>{
+            <button id={`cancel-delete-button-${props._id}`}
+            onClick={(e)=>{
                 e.preventDefault();
                 setIsDeleting(false);
                 }} className='bg-indigo-300 text-stone-600 font-semibold rounded-full p-3 hover:bg-indigo-800 hover:text-stone-800'>Cancel</button>
             <br />
-            <button disabled={loading} onClick={handleDeleteSubmission} type='submit' className='disabled:bg-opacity-30 bg-red-700 text-slate-300 font-semibold rounded-full p-3 hover:bg-red-800 hover:text-slate-100'>{loading? "Loading..." : "Submit"}</button>
+            <button id={`deletion-confirm-button-${props._id}`} disabled={loading} onClick={handleDeleteSubmission} type='submit' className='disabled:bg-opacity-30 bg-red-700 text-slate-300 font-semibold rounded-full p-3 hover:bg-red-800 hover:text-slate-100'>{loading? "Loading..." : "Submit"}</button>
           </div>
         :
           ""
