@@ -2,7 +2,6 @@ import React from 'react'
 
 const SearchBar = (props:{searchQueryValue:string, changeSearchQuery:(value:string)=>void}) => {
   const handleInputChange = (e:{target:{value:string}}) => {
-    // console.log(e.target.value);
     props.changeSearchQuery(e.target.value);
   }
 

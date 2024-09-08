@@ -16,7 +16,6 @@ export const DeletButton: React.FC<iDeleteButtonProps> = (props) => {
   const dispatch = useAppDispatch();
 
     function handleDeleteClick(){
-    // console.log(props._id);
     setIsDeleting(!isDeleting);
     }
 
@@ -26,7 +25,6 @@ export const DeletButton: React.FC<iDeleteButtonProps> = (props) => {
         if(deleteStr === "DELETE"){
           try{
               const idToDel = await axios.put(`api/questions/delete/${props._id}`, {id:props._id});
-              // console.log(idToDel);
               dispatch(removeQuestion(idToDel.data.id))
           }
           catch(err:any){
