@@ -1,4 +1,4 @@
-# Study App
+# Software Engineer Study Guide
 To run this app use 'npm run dev'.
 
 ## App Folder
